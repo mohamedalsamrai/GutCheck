@@ -1,5 +1,10 @@
 name: Deploy Astro site to GitHub Pages
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 on:
   push:
     branches: [ main, develop ]
@@ -10,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
 
       - name: Setup Node
         uses: actions/setup-node@v4
