@@ -1,14 +1,13 @@
 # GutCheck 🥗
 
-A local-first, cross-platform diet and digestive health tracker built with Flutter. Track meals, wellness scores, and discover how different foods impact your digestive health.
+A local-first, cross-platform digestive health tracker built with Flutter. Track meals, wellness scores, and discover how different foods impact your digestive health.
 
 ## Features
 
 - 📱 **Cross-Platform**: iOS, Android, Web (PWA), Linux, and macOS
 - 🔒 **Local-First**: All data stored locally on your device—no cloud sync required
 - 📊 **Analytics**: Visual charts and trends for meals and wellness scores
-- 📸 **Photo Logging**: Capture food photos directly from the camera
-- 💾 **Data Export**: Export meals and wellness data as JSON
+-  **Data Export**: Export meals and wellness data as JSON
 - 🌍 **Progressive Web App**: Install as a PWA on any device with a web browser
 - 🎯 **Ingredient Tracking**: Extensive ingredient database for quick meal logging
 - 🌙 **Offline First**: Full functionality without internet connectivity
@@ -185,6 +184,27 @@ Please ensure code is well-tested and follows Dart/Flutter best practices.
 ## License
 
 This project is licensed under the GNU Affero General Public License v3 (AGPLv3)—see the [LICENSE](LICENSE) file for details.
+
+## Website
+
+A modern Astro landing page is available in the `astro-site` folder:
+- `astro-site/src/pages/index.astro`
+- `astro-site/package.json`
+- `astro-site/astro.config.mjs`
+
+Run locally:
+```bash
+cd astro-site
+npm install
+npm run dev
+```
+
+GitHub Pages deployment:
+1. Ensure branch names are `main` or `develop`.
+2. Push to repo; workflow `astro-gh-pages` deploys to `gh-pages` branch.
+3. In GitHub repo settings > Pages, set source to `gh-pages` branch / `/`.
+
+After deploy, site will be available at `https://<owner>.github.io/<repo>`.
 
 ## Support
 
