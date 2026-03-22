@@ -33,7 +33,13 @@ jobs:
 
       - name: Build site
         working-directory: astro-site
-        run: npm run build
+        run: |
+          npm run build
+          if [ ! -d dist ]; then
+            echo "ERROR: dist directory not created!"
+            exit 1
+          fi
+          ls -la dist/
 
       - name: Disable Jekyll
         working-directory: astro-site
