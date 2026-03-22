@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://your-domain.com',
+  site: 'https://freaxmate.github.io/GutCheck/',
   integrations: [],
 });
