@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .logo-bg { fill: #6366f1; }
+      .logo-icon { fill: white; }
+    </style>
+  </defs>
+  <rect class="logo-bg" width="192" height="192" rx="45"/>
+  <text x="96" y="110" font-size="80" font-weight="bold" text-anchor="middle" class="logo-icon" font-family="sans-serif">GC</text>
+  <text x="96" y="160" font-size="20" text-anchor="middle" class="logo-icon" font-family="sans-serif">Health</text>
+</svg>

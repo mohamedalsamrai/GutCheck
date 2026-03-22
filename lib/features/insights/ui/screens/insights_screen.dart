@@ -1,0 +1,365 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:gutcheck/l10n/app_localizations.dart';
+import '../../domain/impact_score.dart';
+import '../../providers/insights_providers.dart';
+import '../widgets/calendar_heatmap.dart';
+import '../widgets/correlation_scatter_plot.dart';
+import '../widgets/food_correlation_heatmap.dart';
+import '../widgets/food_impact_card.dart';
+import '../widgets/time_filter_bar.dart';
+
+class InsightsScreen extends ConsumerWidget {
+  const InsightsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.insightsTitle),
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: const Icon(Icons.calendar_month_rounded), text: l10n.insightsTabCalendar),
+              Tab(icon: const Icon(Icons.grid_on_rounded), text: l10n.insightsTabHeatmap),
+              Tab(icon: const Icon(Icons.format_list_bulleted_rounded), text: l10n.insightsTabImpact),
+              Tab(icon: const Icon(Icons.scatter_plot_rounded), text: l10n.insightsTabScatter),
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: TimeFilterBar(),
+            ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: _MetricToggleBar(),
+            ),
+            const Expanded(
+              child: TabBarView(
+                children: [
+                  _CalendarTab(),
+                  _HeatmapTab(),
+                  _ImpactTab(),
+                  _ScatterTab(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Calendar Tab (daily wellness calendar) ────────────────────────────────────
+
+class _CalendarTab extends ConsumerWidget {
+  const _CalendarTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final data = ref.watch(heatmapDataProvider);
+
+    return data.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text(l10n.genericError(e))),
+      data: (scores) {
+        if (scores.isEmpty) {
+          return _EmptyState(
+            icon: Icons.calendar_month_rounded,
+            message: l10n.insightsCalendarEmpty,
+          );
+        }
+
+        final now = DateTime.now();
+        final months = <DateTime>[];
+        for (int i = 2; i >= 0; i--) {
+          months.add(DateTime(now.year, now.month - i, 1));
+        }
+
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          children: months
+              .map((m) => Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: CalendarHeatmap(
+                      dailyScores: scores,
+                      month: m,
+                    ),
+                  ))
+              .toList(),
+        );
+      },
+    );
+  }
+}
+
+// ── Heatmap Tab (food × lag correlation matrix) ───────────────────────────────
+
+class _HeatmapTab extends ConsumerWidget {
+  const _HeatmapTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final scores = ref.watch(foodImpactScoresProvider);
+
+    return scores.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text(l10n.genericError(e))),
+      data: (items) {
+        if (items.isEmpty) {
+          return _EmptyState(
+            icon: Icons.grid_on_rounded,
+            message: l10n.insightsHeatmapEmpty,
+          );
+        }
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Food × Time Lag',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Pearson r correlation between food consumption and wellness at each lag window',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+              FoodCorrelationHeatmap(scores: items),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ── Impact Tab ────────────────────────────────────────────────────────────────
+
+class _ImpactTab extends ConsumerWidget {
+  const _ImpactTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final scores = ref.watch(foodImpactScoresProvider);
+
+    return scores.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text(l10n.genericError(e))),
+      data: (items) {
+        if (items.isEmpty) {
+          return _EmptyState(
+            icon: Icons.analytics_outlined,
+            message: l10n.insightsImpactEmpty,
+          );
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.only(bottom: 80),
+          itemCount: items.length,
+          itemBuilder: (ctx, i) => FoodImpactCard(score: items[i]),
+        );
+      },
+    );
+  }
+}
+
+// ── Scatter Tab ───────────────────────────────────────────────────────────────
+
+class _ScatterTab extends ConsumerWidget {
+  const _ScatterTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final selected = ref.watch(selectedImpactScoreProvider);
+    final scores = ref.watch(foodImpactScoresProvider);
+    final heatmap = ref.watch(heatmapDataProvider);
+    final mealTimes = ref.watch(selectedIngredientMealTimesProvider);
+
+    if (selected == null) {
+      return scores.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text(l10n.genericError(e))),
+        data: (items) {
+          if (items.isEmpty) {
+            return _EmptyState(
+              icon: Icons.scatter_plot_rounded,
+              message: l10n.insightsScatterEmpty,
+            );
+          }
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Text(
+                l10n.insightsScatterPrompt,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+              ...items.take(5).map((s) => ListTile(
+                    title: Text(s.ingredientName),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => ref
+                        .read(selectedImpactScoreProvider.notifier)
+                        .state = s,
+                  )),
+            ],
+          );
+        },
+      );
+    }
+
+    return Column(
+      children: [
+        ListTile(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              // Clear the selected item to return to scatter list
+              ref.read(selectedImpactScoreProvider.notifier).state = null;
+            },
+          ),
+          title: Text(selected.ingredientName),
+          subtitle: Text(_localizedImpactSummary(selected, l10n)),
+        ),
+        const Divider(),
+        Expanded(
+          child: heatmap.when(
+            loading: () =>
+                const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Center(child: Text(l10n.genericError(e))),
+            data: (dailyScores) => mealTimes.when(
+              loading: () =>
+                  const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text(l10n.genericError(e))),
+              data: (times) {
+                final median = dailyScores.isEmpty
+                    ? 50.0
+                    : dailyScores.values.reduce((a, b) => a + b) /
+                        dailyScores.length;
+                final spots = CorrelationScatterPlot.buildSpots(
+                  mealTimes: times,
+                  dailyScores: dailyScores,
+                  color: selected.isHarmful ? Colors.red : Colors.green,
+                );
+                return CorrelationScatterPlot(
+                  ingredientName: selected.ingredientName,
+                  spots: spots,
+                  medianScore: median,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ── Empty State ───────────────────────────────────────────────────────────────
+
+class _EmptyState extends StatelessWidget {
+  final IconData icon;
+  final String message;
+
+  const _EmptyState({required this.icon, required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+// ── Metric Toggle Bar ─────────────────────────────────────────────────────────
+
+class _MetricToggleBar extends ConsumerWidget {
+  const _MetricToggleBar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final selected = ref.watch(insightsMetricProvider);
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SegmentedButton<WellnessMetric>(
+        segments: [
+          ButtonSegment(
+            value: WellnessMetric.gutPeace,
+            label: Text(l10n.insightsMetricGutPeace),
+            icon: const Icon(Icons.sentiment_satisfied_rounded),
+          ),
+          ButtonSegment(
+            value: WellnessMetric.heartburn,
+            label: Text(l10n.insightsMetricHeartburn),
+            icon: const Icon(Icons.local_fire_department_rounded),
+          ),
+          ButtonSegment(
+            value: WellnessMetric.diarrhea,
+            label: Text(l10n.insightsMetricDiarrhea),
+            icon: const Icon(Icons.water_drop_rounded),
+          ),
+          ButtonSegment(
+            value: WellnessMetric.combined,
+            label: Text(l10n.insightsMetricCombined),
+            icon: const Icon(Icons.analytics_rounded),
+          ),
+        ],
+        selected: {selected},
+        onSelectionChanged: (s) =>
+            ref.read(insightsMetricProvider.notifier).state = s.first,
+      ),
+    );
+  }
+}
+
+String _localizedImpactSummary(ImpactScore score, AppLocalizations l10n) {
+  if (score.sampleCount < 3) return l10n.impactNotEnoughData;
+  final pct = score.correlationPercent;
+  final direction =
+      score.isHarmful ? l10n.impactDrop : l10n.impactImprovement;
+  // Use zone short label (e.g. "0–4h") instead of raw hours.
+  final lag = score.bestZone.shortLabel;
+  return l10n.impactSummary(pct, direction, lag);
+}

@@ -1,0 +1,269 @@
+{
+  "@@locale": "en",
+
+  "navHome": "Home",
+  "navPantry": "Pantry",
+  "navMealLog": "Meal Log",
+  "navWellness": "Wellness",
+  "navInsights": "Insights",
+
+  "homeLastWellnessTitle": "Last Wellness Check",
+  "homeLastMealTitle": "Last Meal",
+  "homeWeeklyAvgTitle": "7-Day Average",
+  "homeTopInsightTitle": "Top Insight",
+  "homeNoWellnessYet": "No wellness entries yet",
+  "homeNoMealsYet": "No meals logged yet",
+  "homeNoInsightYet": "Log more meals & wellness entries to see food insights.",
+  "homeViewHistory": "View history",
+  "homeViewLog": "View log",
+  "homeViewInsights": "View insights",
+  "homeLogWellness": "Log Wellness",
+  "homeLogMeal": "Log Meal",
+  "homePossibleTrigger": "Possible trigger",
+  "homeLikelyBeneficial": "Likely beneficial",
+
+  "settingsTitle": "Settings",
+  "settingsSectionData": "Data",
+  "settingsExportTitle": "Export All Data",
+  "settingsExportSubtitle": "Share a JSON backup of all your records",
+  "settingsExportSuccess": "Export ready!",
+  "settingsExportError": "Export failed: {error}",
+  "@settingsExportError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "settingsImportTitle": "Import Data",
+  "settingsImportSubtitle": "Restore a previous JSON backup",
+  "settingsImportModeTitle": "How should we import this backup?",
+  "settingsImportModeContent": "Replace All will clear your current data and restore the backup completely. Merge will keep your existing data and add new entries from the backup.",
+  "settingsImportModeMerge": "Merge",
+  "settingsImportModeReplace": "Replace All",
+  "settingsImportPickDialogTitle": "Select JSON backup to import",
+  "settingsImportCancelled": "Import cancelled",
+  "settingsImportError": "Import failed: {error}",
+  "@settingsImportError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "settingsExportPantryTitle": "Export Pantry",
+  "settingsExportPantrySubtitle": "Share a backup of your custom foods",
+  "settingsImportPantryTitle": "Import Pantry",
+  "settingsImportPantrySubtitle": "Add custom foods from a backup file",
+  "settingsClearTitle": "Clear All Data",
+  "settingsClearSubtitle": "Permanently delete all meals and wellness entries",
+  "settingsSectionAppearance": "Appearance",
+  "settingsThemeTitle": "Theme",
+  "settingsThemeSystem": "System default",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsThemeDialogTitle": "Choose Theme",
+
+  "settingsSectionLanguage": "Language",
+  "settingsLanguageAuto": "System default",
+  "settingsLanguageDialogTitle": "Choose Language",
+
+  "settingsSampleDataTitle": "Sample Data",
+  "settingsSampleDataSubtitle": "Load demo meals & wellness logs to explore the analysis features",
+  "settingsSampleDataAdded": "Sample data loaded!",
+  "settingsSampleDataRemoved": "Sample data removed.",
+
+  "fodmapLow": "Low FODMAP",
+  "fodmapModerate": "Moderate FODMAP",
+  "fodmapHigh": "High FODMAP",
+
+  "logMealBrowseByCategory": "Browse by category",
+
+  "settingsSectionAbout": "About",
+  "settingsAppVersion": "v1.0.0 — Local-first, open source",
+  "settingsPrivacyTitle": "Privacy",
+  "settingsPrivacySubtitle": "All data is stored on this device only. Nothing is sent to any server.",
+  "settingsExportSuccess": "Export ready!",
+  "settingsClearDialogTitle": "Clear All Data?",
+  "settingsClearDialogContent": "This will permanently delete all meal logs, wellness entries, and custom foods. This cannot be undone.",
+  "settingsClearSuccess": "All data deleted.",
+
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "deleteAll": "Delete All",
+  "save": "Save",
+
+  "databaseError": "Database error: {error}",
+  "@databaseError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "genericError": "Error: {error}",
+  "@genericError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+
+  "pantryTitle": "Smart Pantry",
+  "pantrySearchHint": "Search ingredients\u2026",
+  "pantryNoResults": "No results for \"{query}\"",
+  "@pantryNoResults": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
+  "pantryEmpty": "No ingredients found",
+  "pantryAddFood": "Add Food",
+  "pantryFodmapLevel": "FODMAP Level",
+  "pantryAlsoClassifiedAs": "Also classified as",
+  "pantryNotes": "Notes",
+  "pantryCustomFood": "Custom food",
+
+  "addFoodTitle": "Add Custom Food",
+  "addFoodNameLabel": "Food Name",
+  "addFoodNameHint": "e.g. Dragon Fruit",
+  "addFoodNameRequired": "Name is required",
+  "addFoodCategoryLabel": "Category",
+  "addFoodFodmapLabel": "FODMAP Level",
+  "addFoodFodmapLow": "Low FODMAP",
+  "addFoodFodmapModerate": "Moderate FODMAP",
+  "addFoodFodmapHigh": "High FODMAP",
+  "addFoodNotesHint": "Any personal observations\u2026",
+  "addFoodSave": "Save Food",
+  "addFoodAdded": "{name} added!",
+  "@addFoodAdded": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "mealEditTitle": "Edit Meal",
+
+  "mealLogTitle": "Meal Log",
+  "mealLogEmpty": "Nothing logged today",
+  "mealLogEmptyHint": "Tap + to log your first meal",
+  "mealLogButton": "Log Meal",
+  "mealDeleteTitle": "Delete Meal?",
+  "mealDeleteContent": "This meal entry will be removed.",
+  "mealFallbackLabel": "Meal",
+  "mealBreakfast": "Breakfast",
+  "mealLunch": "Lunch",
+  "mealDinner": "Dinner",
+  "mealSnack": "Snack",
+
+  "logMealTitle": "Log Meal",
+  "logMealTapToChangeTime": "Tap to change time",
+  "logMealSearchHint": "Search ingredients to add\u2026",
+  "logMealQuantityHint": "Quantity for {name} (optional)",
+  "@logMealQuantityHint": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "logMealAdd": "Add",
+  "logMealAdded": "Added",
+  "logMealNotesHint": "Notes (optional)\u2026",
+  "logMealValidation": "Add at least one ingredient to log a meal.",
+
+  "wellnessTitle": "Wellness Check",
+  "wellnessGutPeace": "Gut Peace",
+  "wellnessGutPeaceMin": "Uncomfortable",
+  "wellnessGutPeaceMax": "Perfect",
+  "wellnessHeartburn": "Heartburn",
+  "wellnessHeartburnMin": "None",
+  "wellnessHeartburnMax": "Severe",
+  "insightsMetricGutPeace": "Comfort",
+  "insightsMetricHeartburn": "Heartburn",
+  "insightsMetricDiarrhea": "Diarrhea",
+  "insightsMetricCombined": "Combined",
+  "wellnessLinkMealsTitle": "Link to Recent Meals",
+  "wellnessLinkMealsHint": "Select meals that may be related to these symptoms.",
+  "wellnessNotesLabel": "Notes (optional)",
+  "wellnessNotesHint": "Any additional observations\u2026",
+  "wellnessSaveButton": "Save Wellness Entry",
+  "wellnessScoreGreat": "Feeling great!",
+  "wellnessScoreOkay": "Doing okay",
+  "wellnessSomeDiscomfort": "Some discomfort",
+  "wellnessSignificantSymptoms": "Significant symptoms",
+  "wellnessSevereDiscomfort": "Severe discomfort",
+  "wellnessDiarrhea": "Diarrhea",
+  "wellnessSaved": "Wellness entry saved!",
+  "wellnessHistoryTitle": "Wellness History",
+  "wellnessHistoryEmpty": "No wellness entries yet",
+  "wellnessEditTitle": "Edit Wellness Entry",
+  "wellnessDeleteTitle": "Delete Entry?",
+  "wellnessDeleteContent": "This wellness entry will be removed.",
+  "linkedMealNoRecent": "No recent meals to link",
+
+  "insightsTitle": "Insights",
+  "insightsTabCalendar": "Calendar",
+  "insightsTabHeatmap": "Heatmap",
+  "insightsTabImpact": "Impact",
+  "insightsTabScatter": "Scatter",
+  "insightsCalendarEmpty": "Log wellness entries to see your calendar",
+  "insightsHeatmapEmpty": "Log at least 3 meals and wellness entries to see food correlations",
+  "insightsImpactEmpty": "Log at least 3 meals with the same ingredient and some wellness entries to see correlations.",
+  "insightsScatterEmpty": "Tap a food in the Impact tab to view its scatter plot.",
+  "insightsScatterPrompt": "Tap a food to view its scatter plot",
+  "impactDataPoints": "{count} data points \u2014 more logging will improve accuracy",
+  "@impactDataPoints": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "timeFilterDay": "Day",
+  "timeFilterWeek": "Week",
+  "timeFilterMonth": "Month",
+  "timeFilterYear": "Year",
+
+  "categoryAll": "All",
+  "categoryVegetable": "Vegetable",
+  "categoryFruit": "Fruit",
+  "categoryGrain": "Grain",
+  "categoryProtein": "Protein",
+  "categoryDairy": "Dairy",
+  "categoryLegume": "Legume",
+  "categoryFat": "Fat/Oil",
+  "categoryHerb": "Herb",
+  "categorySpice": "Spice",
+  "categoryBeverage": "Beverage",
+  "categoryOther": "Other",
+
+  "timeJustNow": "just now",
+  "timeMinutesAgo": "{minutes}m ago",
+  "@timeMinutesAgo": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "timeHoursAgo": "{hours}h ago",
+  "@timeHoursAgo": {
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+  "timeDaysAgo": "{days}d ago",
+  "@timeDaysAgo": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+
+  "impactNotEnoughData": "Not enough data yet",
+  "impactDrop": "drop",
+  "impactImprovement": "improvement",
+  "impactOneHour": "1 hour",
+  "impactHours": "{hours} hours",
+  "@impactHours": {
+    "placeholders": {
+      "hours": { "type": "int" }
+    }
+  },
+  "impactSummary": "{percent}% correlation with wellness {direction} ~{lag} after eating",
+  "@impactSummary": {
+    "placeholders": {
+      "percent": { "type": "int" },
+      "direction": { "type": "String" },
+      "lag": { "type": "String" }
+    }
+  }
+}

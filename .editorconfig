@@ -1,0 +1,29 @@
+# EditorConfig for consistent code style across editors
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.dart]
+indent_style = space
+indent_size = 2
+max_line_length = 88
+
+[*.{md,yaml,yml,json}]
+indent_style = space
+indent_size = 2
+
+[*.{gradle,gradle.kts}]
+indent_style = space
+indent_size = 4
+
+[*.swift]
+indent_style = space
+indent_size = 4
+
+[Makefile]
+indent_style = tab

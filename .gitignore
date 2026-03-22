@@ -104,11 +104,37 @@ unlinked_spec.ds
 **/linux/flutter/generated_plugin_registrant.h
 **/linux/flutter/generated_plugins.cmake
 
+# Isar native library (copied from isar_flutter_libs for flutter run -d linux)
+/libisar.so
+
 # Coverage
 coverage/
 
 # Symbols
 app.*.symbols
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+.directory
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
